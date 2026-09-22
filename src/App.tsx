@@ -116,15 +116,16 @@ function App() {
   };
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-2xl flex-col bg-paper px-6 pb-8 pt-9">
+    <main className="mx-auto flex min-h-screen max-w-2xl flex-col bg-bg px-6 pb-8 pt-9">
       <Toaster position="top-center" richColors />
 
       <header className="flex items-end justify-between pb-5">
         <div>
-          <p className="font-brand text-xs uppercase tracking-widest text-accent">
+          {/* 字体契约：--font-display 只用于 text-lg 及以上，这行是 text-xs，走正文字族 */}
+          <p className="text-xs uppercase tracking-widest text-text-brand">
             本地 · 单向镜像
           </p>
-          <h1 className="mt-1 font-brand text-[30px] font-normal tracking-tight text-ink">
+          <h1 className="mt-1 font-display text-3xl font-normal tracking-tight text-text">
             目录同步
           </h1>
         </div>
@@ -140,13 +141,13 @@ function App() {
         </Button>
       </header>
 
-      <div className="border-t border-line" />
+      <div className="border-t border-border-subtle" />
 
       {pairs.length === 0 ? (
         <div className="flex flex-1 flex-col items-center justify-center gap-4 py-20 text-center">
-          <div className="rounded-lg border border-dashed border-line-2 px-8 py-10">
-            <p className="text-[13.5px] text-ink-2">还没有目录对</p>
-            <p className="mt-1 text-[12px] text-ink-3">
+          <div className="rounded-lg border border-dashed border-border-input px-8 py-10">
+            <p className="text-sm text-text-secondary">还没有目录对</p>
+            <p className="mt-1 text-xs text-text-tertiary">
               添加一组输入 / 输出目录，开始单向镜像同步
             </p>
             <Button
@@ -164,11 +165,11 @@ function App() {
         </div>
       ) : (
         <>
-          <div className="flex items-center justify-between border-b border-line py-3">
-            <label className="flex items-center gap-2 text-[12.5px] text-ink-2">
+          <div className="flex items-center justify-between border-b border-border-subtle py-3">
+            <label className="flex items-center gap-2 text-xs text-text-secondary">
               <Checkbox checked={allSelected} onCheckedChange={(v) => toggleAll(v === true)} />
               全选
-              <span className="font-mono text-[11px] tabular-nums text-ink-3">
+              <span className="font-mono text-xs tabular-nums text-text-tertiary">
                 {selectedCount}/{pairs.length}
               </span>
             </label>

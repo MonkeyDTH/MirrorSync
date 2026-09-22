@@ -12,21 +12,21 @@ interface Props {
 
 export function PairCard({ pair, onToggle, onEdit, onDelete }: Props) {
   return (
-    <div className="group flex items-center gap-3 border-b border-line py-3 last:border-none">
+    <div className="group flex items-center gap-3 border-b border-border-subtle py-3 last:border-none">
       <Checkbox checked={pair.selected} onCheckedChange={(v) => onToggle(v === true)} />
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
-          <span className="truncate font-sans text-[13.5px] font-medium text-ink">
+          <span className="truncate text-sm font-medium text-text">
             {pair.name || "未命名目录对"}
           </span>
-          <span className="shrink-0 rounded-full bg-paper-2 px-1.5 py-0.5 font-mono text-[10px] leading-none text-ink-3">
+          <span className="shrink-0 rounded-full bg-surface-sunken px-1.5 py-0.5 font-mono text-xs leading-none text-text-tertiary">
             {pair.recursive ? "含子目录" : "仅当前层"}
           </span>
         </div>
-        <div className="mt-1 flex min-w-0 items-center gap-1.5 font-mono text-[11.5px] text-ink-3">
+        <div className="mt-1 flex min-w-0 items-center gap-1.5 font-mono text-xs text-text-tertiary">
           <span className="truncate">{pair.source}</span>
-          <ArrowRight className="h-3 w-3 shrink-0 text-ink-3/70" />
+          <ArrowRight className="h-3 w-3 shrink-0 text-text-tertiary" />
           <span className="truncate">{pair.target}</span>
         </div>
       </div>

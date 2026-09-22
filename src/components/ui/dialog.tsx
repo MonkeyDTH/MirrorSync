@@ -13,16 +13,16 @@ export function DialogContent({
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>) {
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-ink/25 backdrop-blur-[1px] data-[state=open]:[animation:overlay-in_150ms_ease-out] data-[state=closed]:[animation:overlay-out_100ms_ease-in]" />
+      <DialogPrimitive.Overlay className="fixed inset-0 z-50 bg-scrim backdrop-blur-[1px] data-[state=open]:[animation:overlay-in_150ms_ease-out] data-[state=closed]:[animation:overlay-out_100ms_ease-in]" />
       <DialogPrimitive.Content
         className={cn(
-          "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg border border-line bg-paper p-6 shadow-[0_8px_30px_-8px_oklch(0.24_0.02_55_/_0.25)] data-[state=open]:[animation:dialog-in_150ms_cubic-bezier(0.16,1,0.3,1)] data-[state=closed]:[animation:dialog-out_100ms_ease-in]",
+          "fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-surface p-6 shadow-[0_8px_30px_-8px_var(--shadow-color)] data-[state=open]:[animation:dialog-in_150ms_cubic-bezier(0.16,1,0.3,1)] data-[state=closed]:[animation:dialog-out_100ms_ease-in]",
           className,
         )}
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute right-4 top-4 text-ink-3 transition-colors hover:text-ink">
+        <DialogPrimitive.Close className="absolute right-4 top-4 text-text-tertiary transition-colors hover:text-text">
           <X className="h-4 w-4" />
         </DialogPrimitive.Close>
       </DialogPrimitive.Content>
@@ -40,12 +40,12 @@ export function DialogTitle({
 }: React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>) {
   return (
     <DialogPrimitive.Title
-      className={cn("font-brand text-xl font-normal tracking-tight text-ink", className)}
+      className={cn("font-display text-xl font-normal tracking-tight text-text", className)}
       {...props}
     />
   );
 }
 
 export function DialogFooter({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("mt-6 flex justify-end gap-2 border-t border-line pt-4", className)} {...props} />;
+  return <div className={cn("mt-6 flex justify-end gap-2 border-t border-border-subtle pt-4", className)} {...props} />;
 }

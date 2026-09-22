@@ -1,0 +1,85 @@
+/* ============================================================
+   design-system — tailwind.css — Tailwind v4 桥接层
+
+   只给 Tailwind v4 项目用。接入顺序：
+   
+       @import 'tailwindcss';
+       @import './tokens.css';
+       @import './theme.css';
+       @import './tailwind.css';
+   
+   把 65 个语义角色映射进 Tailwind 的 --color-* 命名空间，
+   省掉每个 Tailwind 项目各抄一份 @theme。颜色之外的刻度不在这里映射 ——
+   那些在 tokens.css 里已经与 Tailwind 同名同值，直接用 text-lg / rounded-lg 就是对的。
+
+   本文件由 scripts/build-tokens.mjs 从 tokens.config.mjs 生成，请勿手改。
+   重新生成：node scripts/build-tokens.mjs
+   ============================================================ */
+
+@theme {
+    --color-bg: var(--bg);
+    --color-surface: var(--surface);
+    --color-surface-sunken: var(--surface-sunken);
+    --color-surface-hover: var(--surface-hover);
+    --color-surface-muted: var(--surface-muted);
+    --color-scrim: var(--scrim);
+    --color-border-subtle: var(--border-subtle);
+    --color-border: var(--border);
+    --color-border-input: var(--border-input);
+    --color-border-brand: var(--border-brand);
+    --color-text: var(--text);
+    --color-text-secondary: var(--text-secondary);
+    --color-text-tertiary: var(--text-tertiary);
+    --color-text-disabled: var(--text-disabled);
+    --color-text-brand: var(--text-brand);
+    --color-focus-ring: var(--focus-ring);
+    --color-shadow-color: var(--shadow-color);
+    --color-accent: var(--accent);
+    --color-accent-hover: var(--accent-hover);
+    --color-accent-active: var(--accent-active);
+    --color-accent-bg: var(--accent-bg);
+    --color-accent-bg-hover: var(--accent-bg-hover);
+    --color-accent-border: var(--accent-border);
+    --color-accent-text: var(--accent-text);
+    --color-accent-2: var(--accent-2);
+    --color-accent-2-hover: var(--accent-2-hover);
+    --color-accent-2-active: var(--accent-2-active);
+    --color-accent-2-bg: var(--accent-2-bg);
+    --color-accent-2-bg-hover: var(--accent-2-bg-hover);
+    --color-accent-2-border: var(--accent-2-border);
+    --color-accent-2-text: var(--accent-2-text);
+    --color-success: var(--success);
+    --color-success-hover: var(--success-hover);
+    --color-success-active: var(--success-active);
+    --color-success-bg: var(--success-bg);
+    --color-success-bg-hover: var(--success-bg-hover);
+    --color-success-border: var(--success-border);
+    --color-success-text: var(--success-text);
+    --color-warning: var(--warning);
+    --color-warning-hover: var(--warning-hover);
+    --color-warning-active: var(--warning-active);
+    --color-warning-bg: var(--warning-bg);
+    --color-warning-bg-hover: var(--warning-bg-hover);
+    --color-warning-border: var(--warning-border);
+    --color-warning-text: var(--warning-text);
+    --color-danger: var(--danger);
+    --color-danger-hover: var(--danger-hover);
+    --color-danger-active: var(--danger-active);
+    --color-danger-bg: var(--danger-bg);
+    --color-danger-bg-hover: var(--danger-bg-hover);
+    --color-danger-border: var(--danger-border);
+    --color-danger-text: var(--danger-text);
+    --color-info: var(--info);
+    --color-info-hover: var(--info-hover);
+    --color-info-active: var(--info-active);
+    --color-info-bg: var(--info-bg);
+    --color-info-bg-hover: var(--info-bg-hover);
+    --color-info-border: var(--info-border);
+    --color-info-text: var(--info-text);
+    --color-on-accent: var(--on-accent);
+    --color-on-accent-2: var(--on-accent-2);
+    --color-on-success: var(--on-success);
+    --color-on-warning: var(--on-warning);
+    --color-on-danger: var(--on-danger);
+    --color-on-info: var(--on-info);
+}

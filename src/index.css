@@ -1,52 +1,33 @@
 @import "tailwindcss";
+@import "./tokens.css";
+@import "./theme.css";
+@import "./fonts.css";
+@import "./tailwind.css";
 
-@font-face {
-  font-family: "LXGW Neo XiHei Brand";
-  src: url("./assets/fonts/LXGWNeoXiHei-brand.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-  /* 仅收录标题/品牌字实际用到的字符，压缩至 24KB */
-  unicode-range: U+0020-007E, U+50CF, U+52A0, U+5355, U+540C, U+5411, U+5730,
-    U+5BF9, U+5F55, U+672C, U+6B65, U+6DFB, U+76EE, U+7F16, U+8F91, U+955C, U+B7;
-}
+/*
+ * 色彩、字体、字号与圆角全部来自 design-system，本文件不再定义任何色值。
+ *
+ * tokens.css 的 :root 是非分层样式，无条件压过 Tailwind 的 @layer theme —— 因此
+ * text-sm / rounded-lg / font-mono 这些 utility 拿到的就是设计系统的值，不需要桥接。
+ * tailwind.css 只负责把 65 个语义角色映射进 --color-* 命名空间（bg-surface / text-text …）。
+ */
 
-@theme {
-  --font-brand: "LXGW Neo XiHei Brand", var(--font-sans);
-
-  /* 暖白纸感中性色，向琥珀色微调 */
-  --color-paper: oklch(0.985 0.006 80);
-  --color-paper-2: oklch(0.96 0.009 75);
-  --color-ink: oklch(0.24 0.018 55);
-  --color-ink-2: oklch(0.48 0.016 55);
-  --color-ink-3: oklch(0.66 0.014 60);
-  --color-line: oklch(0.885 0.011 70);
-  --color-line-2: oklch(0.82 0.013 70);
-
-  /* 单一强调色：琥珀 / 黄铜，替代泛滥的紫蓝色 */
-  --color-accent: oklch(0.64 0.15 55);
-  --color-accent-hover: oklch(0.58 0.16 55);
-  --color-accent-soft: oklch(0.94 0.03 60);
-
-  --color-success: oklch(0.56 0.11 155);
-  --color-success-soft: oklch(0.95 0.03 155);
-  --color-danger: oklch(0.55 0.15 30);
-  --color-danger-soft: oklch(0.95 0.035 30);
-
-  --font-sans: "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-ui: "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-mono: "Cascadia Mono", "Cascadia Code", Consolas, ui-monospace, monospace;
+/* --font-display 不在 Tailwind 的 font-* 命名空间里，桥接层也只映射颜色，所以单给一个类。
+   字体契约约定它只用于 --text-lg 及以上：更小的字号里楷体辨识度低于黑体。 */
+.font-display {
+  font-family: var(--font-display);
 }
 
 body {
   margin: 0;
-  font-family: var(--font-ui);
-  background-color: var(--color-paper);
-  color: var(--color-ink);
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 ::selection {
-  background-color: var(--color-accent-soft);
-  color: var(--color-ink);
+  background-color: var(--accent-bg);
+  color: var(--text);
 }
 
 /* 细窄滚动条，弱化存在感 */
@@ -55,7 +36,7 @@ body {
   height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-line-2);
+  background-color: var(--border-input);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-track {

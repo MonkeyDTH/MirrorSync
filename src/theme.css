@@ -1,0 +1,56 @@
+/* ============================================================
+   design-system — theme · File_Sync
+
+   品牌色族：teal    明暗模式：light    id：file-sync
+   
+   项目接入：先引 tokens/tokens.css，再引本文件。本文件之后加载即可覆盖默认品牌。
+   这是浅色主题，无需额外属性。
+
+   本文件由 scripts/build-tokens.mjs 从 tokens.config.mjs 生成，请勿手改。
+   重新生成：node scripts/build-tokens.mjs
+   ============================================================ */
+
+:root {
+    color-scheme: light;
+    --brand-1: var(--teal-1);
+    --brand-2: var(--teal-2);
+    --brand-3: var(--teal-3);
+    --brand-4: var(--teal-4);
+    --brand-5: var(--teal-5);
+    --brand-6: var(--teal-6);
+    --brand-7: var(--teal-7);
+    --brand-8: var(--teal-8);
+    --brand-9: var(--teal-9);
+    --brand-10: var(--teal-10);
+    --brand-11: var(--teal-11);
+    --brand-12: var(--teal-12);
+
+    --accent2-1: var(--blue-1);
+    --accent2-2: var(--blue-2);
+    --accent2-3: var(--blue-3);
+    --accent2-4: var(--blue-4);
+    --accent2-5: var(--blue-5);
+    --accent2-6: var(--blue-6);
+    --accent2-7: var(--blue-7);
+    --accent2-8: var(--blue-8);
+    --accent2-9: var(--blue-9);
+    --accent2-10: var(--blue-10);
+    --accent2-11: var(--blue-11);
+    --accent2-12: var(--blue-12);
+
+    --chart-surface: #fefbf8;
+    --chart-border: #c5beb6;
+    --chart-text: #201911;
+    --chart-text-secondary: #433c33;
+    --chart-success: #2c6d3e;
+    --chart-warning: #805309;
+    --chart-danger: #a12f2f;
+    --chart-info: #0a60a4;
+
+    --chart-accent: #0c6d5f;
+    --chart-scale-1: #b9e6dc;
+    --chart-scale-2: #6fbfb0;
+    --chart-scale-3: #189e8c;
+    --chart-scale-4: #0f7a6b;
+    --chart-scale-5: #065449;
+}

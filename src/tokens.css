@@ -1,0 +1,559 @@
+/* ============================================================
+   design-system — tokens.css — 对外分发的单文件产物
+
+   内容 = Layer 1 色板 + Layer 3 语义角色。Layer 2（品牌色族）由 themes/*.css 注入，
+   本文件末尾给了一份默认映射（green），未加载 theme 时仍可用。
+   
+   色族 10 个 × 12 阶 × 2 模式，语义角色分 light / dark 两套。
+
+   本文件由 scripts/build-tokens.mjs 从 tokens.config.mjs 生成，请勿手改。
+   重新生成：node scripts/build-tokens.mjs
+   ============================================================ */
+
+
+/* ── Layer 1 · primitives：色板，无语义 ───────────────────────── */
+
+:root {
+    --neutral-1: oklch(99.0% 0.005 75);
+    --neutral-2: oklch(97.5% 0.007 75);
+    --neutral-3: oklch(96.0% 0.008 75);
+    --neutral-4: oklch(93.5% 0.010 75);
+    --neutral-5: oklch(91.0% 0.011 75);
+    --neutral-6: oklch(88.0% 0.012 75);
+    --neutral-7: oklch(80.5% 0.014 75);
+    --neutral-8: oklch(63.0% 0.016 75);
+    --neutral-9: oklch(48.0% 0.017 75);
+    --neutral-10: oklch(44.0% 0.017 75);
+    --neutral-11: oklch(36.0% 0.018 75);
+    --neutral-12: oklch(22.0% 0.019 75);
+    --red-1: oklch(99.0% 0.005 25);
+    --red-2: oklch(97.5% 0.012 25);
+    --red-3: oklch(96.0% 0.019 25);
+    --red-4: oklch(93.5% 0.031 25);
+    --red-5: oklch(91.0% 0.045 25);
+    --red-6: oklch(88.0% 0.061 25);
+    --red-7: oklch(80.5% 0.107 25);
+    --red-8: oklch(63.0% 0.135 25);
+    --red-9: oklch(48.0% 0.150 25);
+    --red-10: oklch(44.0% 0.150 25);
+    --red-11: oklch(36.0% 0.138 25);
+    --red-12: oklch(22.0% 0.087 25);
+    --yellow-1: oklch(99.0% 0.007 72);
+    --yellow-2: oklch(97.5% 0.018 72);
+    --yellow-3: oklch(96.0% 0.029 72);
+    --yellow-4: oklch(93.5% 0.048 72);
+    --yellow-5: oklch(91.0% 0.067 72);
+    --yellow-6: oklch(88.0% 0.092 72);
+    --yellow-7: oklch(80.5% 0.120 72);
+    --yellow-8: oklch(63.0% 0.130 72);
+    --yellow-9: oklch(48.0% 0.099 72);
+    --yellow-10: oklch(44.0% 0.091 72);
+    --yellow-11: oklch(36.0% 0.075 72);
+    --yellow-12: oklch(22.0% 0.048 72);
+    --green-1: oklch(99.0% 0.010 150);
+    --green-2: oklch(97.5% 0.016 150);
+    --green-3: oklch(96.0% 0.026 150);
+    --green-4: oklch(93.5% 0.040 150);
+    --green-5: oklch(91.0% 0.052 150);
+    --green-6: oklch(88.0% 0.064 150);
+    --green-7: oklch(80.5% 0.080 150);
+    --green-8: oklch(63.0% 0.090 150);
+    --green-9: oklch(48.0% 0.100 150);
+    --green-10: oklch(44.0% 0.100 150);
+    --green-11: oklch(36.0% 0.092 150);
+    --green-12: oklch(22.0% 0.058 150);
+    --blue-1: oklch(99.0% 0.005 250);
+    --blue-2: oklch(97.5% 0.012 250);
+    --blue-3: oklch(96.0% 0.019 250);
+    --blue-4: oklch(93.5% 0.031 250);
+    --blue-5: oklch(91.0% 0.044 250);
+    --blue-6: oklch(88.0% 0.059 250);
+    --blue-7: oklch(80.5% 0.098 250);
+    --blue-8: oklch(63.0% 0.135 250);
+    --blue-9: oklch(48.0% 0.131 250);
+    --blue-10: oklch(44.0% 0.120 250);
+    --blue-11: oklch(36.0% 0.099 250);
+    --blue-12: oklch(22.0% 0.063 250);
+    --olive-1: oklch(99.0% 0.015 113);
+    --olive-2: oklch(97.5% 0.024 113);
+    --olive-3: oklch(96.0% 0.039 113);
+    --olive-4: oklch(93.5% 0.060 113);
+    --olive-5: oklch(91.0% 0.078 113);
+    --olive-6: oklch(88.0% 0.096 113);
+    --olive-7: oklch(80.5% 0.120 113);
+    --olive-8: oklch(63.0% 0.135 113);
+    --olive-9: oklch(48.0% 0.103 113);
+    --olive-10: oklch(44.0% 0.095 113);
+    --olive-11: oklch(36.0% 0.078 113);
+    --olive-12: oklch(22.0% 0.050 113);
+    --teal-1: oklch(99.0% 0.013 180);
+    --teal-2: oklch(97.5% 0.024 180);
+    --teal-3: oklch(96.0% 0.039 180);
+    --teal-4: oklch(93.5% 0.060 180);
+    --teal-5: oklch(91.0% 0.078 180);
+    --teal-6: oklch(88.0% 0.096 180);
+    --teal-7: oklch(80.5% 0.120 180);
+    --teal-8: oklch(63.0% 0.110 180);
+    --teal-9: oklch(48.0% 0.084 180);
+    --teal-10: oklch(44.0% 0.077 180);
+    --teal-11: oklch(36.0% 0.063 180);
+    --teal-12: oklch(22.0% 0.040 180);
+    --sky-1: oklch(99.0% 0.011 202);
+    --sky-2: oklch(97.5% 0.024 202);
+    --sky-3: oklch(96.0% 0.039 202);
+    --sky-4: oklch(93.5% 0.060 202);
+    --sky-5: oklch(91.0% 0.078 202);
+    --sky-6: oklch(88.0% 0.096 202);
+    --sky-7: oklch(80.5% 0.120 202);
+    --sky-8: oklch(63.0% 0.103 202);
+    --sky-9: oklch(48.0% 0.079 202);
+    --sky-10: oklch(44.0% 0.072 202);
+    --sky-11: oklch(36.0% 0.059 202);
+    --sky-12: oklch(22.0% 0.038 202);
+    --indigo-1: oklch(99.0% 0.005 288);
+    --indigo-2: oklch(97.5% 0.012 288);
+    --indigo-3: oklch(96.0% 0.019 288);
+    --indigo-4: oklch(93.5% 0.032 288);
+    --indigo-5: oklch(91.0% 0.044 288);
+    --indigo-6: oklch(88.0% 0.060 288);
+    --indigo-7: oklch(80.5% 0.100 288);
+    --indigo-8: oklch(63.0% 0.135 288);
+    --indigo-9: oklch(48.0% 0.150 288);
+    --indigo-10: oklch(44.0% 0.150 288);
+    --indigo-11: oklch(36.0% 0.138 288);
+    --indigo-12: oklch(22.0% 0.087 288);
+    --magenta-1: oklch(99.0% 0.007 332);
+    --magenta-2: oklch(97.5% 0.018 332);
+    --magenta-3: oklch(96.0% 0.030 332);
+    --magenta-4: oklch(93.5% 0.049 332);
+    --magenta-5: oklch(91.0% 0.070 332);
+    --magenta-6: oklch(88.0% 0.096 332);
+    --magenta-7: oklch(80.5% 0.120 332);
+    --magenta-8: oklch(63.0% 0.135 332);
+    --magenta-9: oklch(48.0% 0.150 332);
+    --magenta-10: oklch(44.0% 0.150 332);
+    --magenta-11: oklch(36.0% 0.138 332);
+    --magenta-12: oklch(22.0% 0.087 332);
+}
+
+[data-scheme="dark"] {
+    --neutral-1: oklch(15.0% 0.006 75);
+    --neutral-2: oklch(18.0% 0.007 75);
+    --neutral-3: oklch(21.4% 0.008 75);
+    --neutral-4: oklch(24.6% 0.009 75);
+    --neutral-5: oklch(27.6% 0.010 75);
+    --neutral-6: oklch(31.2% 0.011 75);
+    --neutral-7: oklch(35.4% 0.012 75);
+    --neutral-8: oklch(58.0% 0.013 75);
+    --neutral-9: oklch(64.0% 0.015 75);
+    --neutral-10: oklch(70.0% 0.015 75);
+    --neutral-11: oklch(80.0% 0.016 75);
+    --neutral-12: oklch(93.0% 0.017 75);
+    --red-1: oklch(15.0% 0.036 25);
+    --red-2: oklch(18.0% 0.045 25);
+    --red-3: oklch(21.4% 0.060 25);
+    --red-4: oklch(24.6% 0.075 25);
+    --red-5: oklch(27.6% 0.090 25);
+    --red-6: oklch(31.2% 0.105 25);
+    --red-7: oklch(35.4% 0.126 25);
+    --red-8: oklch(58.0% 0.141 25);
+    --red-9: oklch(64.0% 0.150 25);
+    --red-10: oklch(70.0% 0.150 25);
+    --red-11: oklch(80.0% 0.110 25);
+    --red-12: oklch(93.0% 0.034 25);
+    --yellow-1: oklch(15.0% 0.036 72);
+    --yellow-2: oklch(18.0% 0.042 72);
+    --yellow-3: oklch(21.4% 0.047 72);
+    --yellow-4: oklch(24.6% 0.053 72);
+    --yellow-5: oklch(27.6% 0.059 72);
+    --yellow-6: oklch(31.2% 0.066 72);
+    --yellow-7: oklch(35.4% 0.074 72);
+    --yellow-8: oklch(58.0% 0.120 72);
+    --yellow-9: oklch(64.0% 0.132 72);
+    --yellow-10: oklch(70.0% 0.144 72);
+    --yellow-11: oklch(80.0% 0.123 72);
+    --yellow-12: oklch(93.0% 0.052 72);
+    --green-1: oklch(15.0% 0.024 150);
+    --green-2: oklch(18.0% 0.030 150);
+    --green-3: oklch(21.4% 0.040 150);
+    --green-4: oklch(24.6% 0.050 150);
+    --green-5: oklch(27.6% 0.060 150);
+    --green-6: oklch(31.2% 0.070 150);
+    --green-7: oklch(35.4% 0.084 150);
+    --green-8: oklch(58.0% 0.094 150);
+    --green-9: oklch(64.0% 0.100 150);
+    --green-10: oklch(70.0% 0.100 150);
+    --green-11: oklch(80.0% 0.082 150);
+    --green-12: oklch(93.0% 0.046 150);
+    --blue-1: oklch(15.0% 0.036 250);
+    --blue-2: oklch(18.0% 0.045 250);
+    --blue-3: oklch(21.4% 0.060 250);
+    --blue-4: oklch(24.6% 0.070 250);
+    --blue-5: oklch(27.6% 0.077 250);
+    --blue-6: oklch(31.2% 0.087 250);
+    --blue-7: oklch(35.4% 0.098 250);
+    --blue-8: oklch(58.0% 0.141 250);
+    --blue-9: oklch(64.0% 0.150 250);
+    --blue-10: oklch(70.0% 0.150 250);
+    --blue-11: oklch(80.0% 0.101 250);
+    --blue-12: oklch(93.0% 0.034 250);
+    --olive-1: oklch(15.0% 0.036 113);
+    --olive-2: oklch(18.0% 0.043 113);
+    --olive-3: oklch(21.4% 0.049 113);
+    --olive-4: oklch(24.6% 0.055 113);
+    --olive-5: oklch(27.6% 0.061 113);
+    --olive-6: oklch(31.2% 0.068 113);
+    --olive-7: oklch(35.4% 0.077 113);
+    --olive-8: oklch(58.0% 0.125 113);
+    --olive-9: oklch(64.0% 0.137 113);
+    --olive-10: oklch(70.0% 0.150 113);
+    --olive-11: oklch(80.0% 0.123 113);
+    --olive-12: oklch(93.0% 0.069 113);
+    --teal-1: oklch(15.0% 0.030 180);
+    --teal-2: oklch(18.0% 0.034 180);
+    --teal-3: oklch(21.4% 0.039 180);
+    --teal-4: oklch(24.6% 0.044 180);
+    --teal-5: oklch(27.6% 0.049 180);
+    --teal-6: oklch(31.2% 0.055 180);
+    --teal-7: oklch(35.4% 0.062 180);
+    --teal-8: oklch(58.0% 0.101 180);
+    --teal-9: oklch(64.0% 0.112 180);
+    --teal-10: oklch(70.0% 0.122 180);
+    --teal-11: oklch(80.0% 0.123 180);
+    --teal-12: oklch(93.0% 0.069 180);
+    --sky-1: oklch(15.0% 0.028 202);
+    --sky-2: oklch(18.0% 0.032 202);
+    --sky-3: oklch(21.4% 0.037 202);
+    --sky-4: oklch(24.6% 0.042 202);
+    --sky-5: oklch(27.6% 0.046 202);
+    --sky-6: oklch(31.2% 0.052 202);
+    --sky-7: oklch(35.4% 0.059 202);
+    --sky-8: oklch(58.0% 0.095 202);
+    --sky-9: oklch(64.0% 0.105 202);
+    --sky-10: oklch(70.0% 0.115 202);
+    --sky-11: oklch(80.0% 0.123 202);
+    --sky-12: oklch(93.0% 0.069 202);
+    --indigo-1: oklch(15.0% 0.036 288);
+    --indigo-2: oklch(18.0% 0.045 288);
+    --indigo-3: oklch(21.4% 0.060 288);
+    --indigo-4: oklch(24.6% 0.075 288);
+    --indigo-5: oklch(27.6% 0.090 288);
+    --indigo-6: oklch(31.2% 0.105 288);
+    --indigo-7: oklch(35.4% 0.126 288);
+    --indigo-8: oklch(58.0% 0.141 288);
+    --indigo-9: oklch(64.0% 0.150 288);
+    --indigo-10: oklch(70.0% 0.150 288);
+    --indigo-11: oklch(80.0% 0.103 288);
+    --indigo-12: oklch(93.0% 0.034 288);
+    --magenta-1: oklch(15.0% 0.036 332);
+    --magenta-2: oklch(18.0% 0.045 332);
+    --magenta-3: oklch(21.4% 0.060 332);
+    --magenta-4: oklch(24.6% 0.075 332);
+    --magenta-5: oklch(27.6% 0.090 332);
+    --magenta-6: oklch(31.2% 0.105 332);
+    --magenta-7: oklch(35.4% 0.126 332);
+    --magenta-8: oklch(58.0% 0.141 332);
+    --magenta-9: oklch(64.0% 0.150 332);
+    --magenta-10: oklch(70.0% 0.150 332);
+    --magenta-11: oklch(80.0% 0.123 332);
+    --magenta-12: oklch(93.0% 0.053 332);
+}
+
+/* ── Layer 2 · 品牌映射默认值 ─────────────────────────────────── */
+
+:root {
+    --brand-1: var(--green-1);
+    --brand-2: var(--green-2);
+    --brand-3: var(--green-3);
+    --brand-4: var(--green-4);
+    --brand-5: var(--green-5);
+    --brand-6: var(--green-6);
+    --brand-7: var(--green-7);
+    --brand-8: var(--green-8);
+    --brand-9: var(--green-9);
+    --brand-10: var(--green-10);
+    --brand-11: var(--green-11);
+    --brand-12: var(--green-12);
+    --accent2-1: var(--blue-1);
+    --accent2-2: var(--blue-2);
+    --accent2-3: var(--blue-3);
+    --accent2-4: var(--blue-4);
+    --accent2-5: var(--blue-5);
+    --accent2-6: var(--blue-6);
+    --accent2-7: var(--blue-7);
+    --accent2-8: var(--blue-8);
+    --accent2-9: var(--blue-9);
+    --accent2-10: var(--blue-10);
+    --accent2-11: var(--blue-11);
+    --accent2-12: var(--blue-12);
+}
+
+/* ── Layer 3 · semantic：角色定义 ─────────────────────────────── */
+
+:root {
+    --bg: var(--neutral-2);
+    --surface: var(--neutral-1);
+    --surface-sunken: var(--neutral-3);
+    --surface-hover: var(--neutral-4);
+    --surface-muted: var(--neutral-5);
+    --scrim: color-mix(in oklab, var(--neutral-12) 50%, transparent);
+    --border-subtle: var(--neutral-6);
+    --border: var(--neutral-7);
+    --border-input: var(--neutral-8);
+    --border-brand: var(--brand-8);
+    --text: var(--neutral-12);
+    --text-secondary: var(--neutral-11);
+    --text-tertiary: var(--neutral-10);
+    --text-disabled: var(--neutral-8);
+    --text-brand: var(--brand-11);
+    --focus-ring: var(--brand-9);
+    --shadow-color: color-mix(in oklab, var(--neutral-12) 12%, transparent);
+
+    --accent: var(--brand-9);
+    --accent-hover: var(--brand-10);
+    --accent-active: var(--brand-11);
+    --accent-bg: var(--brand-3);
+    --accent-bg-hover: var(--brand-4);
+    --accent-border: var(--brand-8);
+    --accent-text: var(--brand-11);
+    --on-accent: var(--neutral-1);
+    --accent-2: var(--accent2-9);
+    --accent-2-hover: var(--accent2-10);
+    --accent-2-active: var(--accent2-11);
+    --accent-2-bg: var(--accent2-3);
+    --accent-2-bg-hover: var(--accent2-4);
+    --accent-2-border: var(--accent2-8);
+    --accent-2-text: var(--accent2-11);
+    --on-accent-2: var(--neutral-1);
+    --success: var(--green-9);
+    --success-hover: var(--green-10);
+    --success-active: var(--green-11);
+    --success-bg: var(--green-3);
+    --success-bg-hover: var(--green-4);
+    --success-border: var(--green-8);
+    --success-text: var(--green-11);
+    --on-success: var(--neutral-1);
+    --warning: var(--yellow-9);
+    --warning-hover: var(--yellow-10);
+    --warning-active: var(--yellow-11);
+    --warning-bg: var(--yellow-3);
+    --warning-bg-hover: var(--yellow-4);
+    --warning-border: var(--yellow-8);
+    --warning-text: var(--yellow-11);
+    --on-warning: var(--neutral-1);
+    --danger: var(--red-9);
+    --danger-hover: var(--red-10);
+    --danger-active: var(--red-11);
+    --danger-bg: var(--red-3);
+    --danger-bg-hover: var(--red-4);
+    --danger-border: var(--red-8);
+    --danger-text: var(--red-11);
+    --on-danger: var(--neutral-1);
+    --info: var(--blue-9);
+    --info-hover: var(--blue-10);
+    --info-active: var(--blue-11);
+    --info-bg: var(--blue-3);
+    --info-bg-hover: var(--blue-4);
+    --info-border: var(--blue-8);
+    --info-text: var(--blue-11);
+    --on-info: var(--neutral-1);
+}
+
+[data-scheme="dark"] {
+    --bg: var(--neutral-2);
+    --surface: var(--neutral-4);
+    --surface-sunken: var(--neutral-1);
+    --surface-hover: var(--neutral-5);
+    --surface-muted: var(--neutral-6);
+    --scrim: color-mix(in oklab, var(--neutral-1) 70%, transparent);
+    --border-subtle: var(--neutral-6);
+    --border: var(--neutral-7);
+    --border-input: var(--neutral-8);
+    --border-brand: var(--brand-8);
+    --text: var(--neutral-12);
+    --text-secondary: var(--neutral-11);
+    --text-tertiary: var(--neutral-10);
+    --text-disabled: var(--neutral-7);
+    --text-brand: var(--brand-11);
+    --focus-ring: var(--brand-9);
+    --shadow-color: color-mix(in oklab, var(--neutral-1) 45%, transparent);
+
+    --accent: var(--brand-9);
+    --accent-hover: var(--brand-10);
+    --accent-active: var(--brand-11);
+    --accent-bg: var(--brand-3);
+    --accent-bg-hover: var(--brand-4);
+    --accent-border: var(--brand-8);
+    --accent-text: var(--brand-11);
+    --on-accent: var(--neutral-1);
+    --accent-2: var(--accent2-9);
+    --accent-2-hover: var(--accent2-10);
+    --accent-2-active: var(--accent2-11);
+    --accent-2-bg: var(--accent2-3);
+    --accent-2-bg-hover: var(--accent2-4);
+    --accent-2-border: var(--accent2-8);
+    --accent-2-text: var(--accent2-11);
+    --on-accent-2: var(--neutral-1);
+    --success: var(--green-9);
+    --success-hover: var(--green-10);
+    --success-active: var(--green-11);
+    --success-bg: var(--green-3);
+    --success-bg-hover: var(--green-4);
+    --success-border: var(--green-8);
+    --success-text: var(--green-11);
+    --on-success: var(--neutral-1);
+    --warning: var(--yellow-9);
+    --warning-hover: var(--yellow-10);
+    --warning-active: var(--yellow-11);
+    --warning-bg: var(--yellow-3);
+    --warning-bg-hover: var(--yellow-4);
+    --warning-border: var(--yellow-8);
+    --warning-text: var(--yellow-11);
+    --on-warning: var(--neutral-1);
+    --danger: var(--red-9);
+    --danger-hover: var(--red-10);
+    --danger-active: var(--red-11);
+    --danger-bg: var(--red-3);
+    --danger-bg-hover: var(--red-4);
+    --danger-border: var(--red-8);
+    --danger-text: var(--red-11);
+    --on-danger: var(--neutral-1);
+    --info: var(--blue-9);
+    --info-hover: var(--blue-10);
+    --info-active: var(--blue-11);
+    --info-bg: var(--blue-3);
+    --info-bg-hover: var(--blue-4);
+    --info-border: var(--blue-8);
+    --info-text: var(--blue-11);
+    --on-info: var(--neutral-1);
+}
+
+/* ── Layer 3b · chart：图表库专用的 sRGB 色彩通道 ─────────────── */
+
+/* 只放 hex：Canvas/SVG 类图表库（ECharts / Chart.js）解析不了 oklch() 与 var()，
+   遇到就静默回退成 #000000，且不报错 —— 只有渲染出来是黑的。
+   只有要交给图表库参数的颜色才从这里取；页面 DOM 继续用上面的语义角色。
+   品牌相关的 --chart-accent / --chart-scale-* 在这里只是默认值（weight-recorder），
+   引了 theme.css 就会被项目品牌覆盖。 */
+
+:root {
+    --chart-surface: #fefbf8;
+    --chart-border: #c5beb6;
+    --chart-text: #201911;
+    --chart-text-secondary: #433c33;
+    --chart-success: #2c6d3e;
+    --chart-warning: #805309;
+    --chart-danger: #a12f2f;
+    --chart-info: #0a60a4;
+
+    --chart-accent: #2c6d3e;
+    --chart-scale-1: #cde1d0;
+    --chart-scale-2: #96b89c;
+    --chart-scale-3: #669770;
+    --chart-scale-4: #3e784c;
+    --chart-scale-5: #115629;
+}
+
+[data-scheme="dark"] {
+    --chart-surface: #23201c;
+    --chart-border: #3f3b35;
+    --chart-text: #efe7dc;
+    --chart-text-secondary: #c4bcb3;
+    --chart-success: #5d9d6b;
+    --chart-warning: #bd7d14;
+    --chart-danger: #d8625c;
+    --chart-info: #3690e3;
+
+    --chart-accent: #5d9d6b;
+    --chart-scale-1: #044a1f;
+    --chart-scale-2: #307041;
+    --chart-scale-3: #5a9667;
+    --chart-scale-4: #92c29b;
+    --chart-scale-5: #dcf7e1;
+}
+
+/* ── Layer 3c · 分类色板：9 个色族的同明度切片 ─────────────────── */
+
+/* 服务「类别」而非「强度」，所以这一层不分明暗模式也不跟品牌走：同一个分类在浅色与
+   深色下必须是同一个颜色，否则用户会以为换了类别。单档同时满足两种底色的 3:1
+   （WCAG 1.4.11，非文字对比度）—— 对浅底 3.6~4.3、对深底 3.7~4.4。
+
+   --cat-* 给页面 DOM（色条 / 色带 / 徽章），--chart-cat-* 是同一批色的 sRGB hex，
+   给 Canvas/SVG 图表库（它们解析不了 oklch，会静默回退成黑色）。
+
+   三条使用约定：
+     1. 相邻两色互比只有 1.01~1.07（同明度色板的固有特征，灰度下几乎不可分）——
+        饼图 / 堆叠图必须给扇区加描边：borderColor: var(--chart-surface), borderWidth: 2。
+     2. 项目选色要跳过自己的品牌色族，否则分类色条会与品牌按钮撞色。
+     3. 分类色不承载语义 —— 不要因为某分类"是亏损的"就选 --cat-1，语义走 --danger。 */
+
+:root {
+    --cat-1: oklch(60.0% 0.112 25);  /* red H25 */
+    --cat-2: oklch(60.0% 0.112 72);  /* yellow H72 */
+    --cat-3: oklch(60.0% 0.112 113);  /* olive H113 */
+    --cat-4: oklch(60.0% 0.075 150);  /* green H150 */
+    --cat-5: oklch(60.0% 0.105 180);  /* teal H180 */
+    --cat-6: oklch(60.0% 0.098 202);  /* sky H202 */
+    --cat-7: oklch(60.0% 0.112 250);  /* blue H250 */
+    --cat-8: oklch(60.0% 0.112 288);  /* indigo H288 */
+    --cat-9: oklch(60.0% 0.112 332);  /* magenta H332 */
+
+    --chart-cat-1: #ba635d;  /* red H25 */
+    --chart-cat-2: #a97426;  /* yellow H72 */
+    --chart-cat-3: #81872d;  /* olive H113 */
+    --chart-cat-4: #5f8d68;  /* green H150 */
+    --chart-cat-5: #159483;  /* teal H180 */
+    --chart-cat-6: #159199;  /* sky H202 */
+    --chart-cat-7: #4784c1;  /* blue H250 */
+    --chart-cat-8: #7d74bf;  /* indigo H288 */
+    --chart-cat-9: #a7669e;  /* magenta H332 */
+}
+
+/* ── 非颜色刻度 ───────────────────────────────────────────────── */
+
+/* 字号与圆角对齐 Tailwind v4 默认值（2026-09-18），同名同值 —— 这样在 Tailwind 项目里
+   的覆盖不再产生差异。撞名一致性由 check-tokens.mjs 的第 8 条断言看守。
+   间距与 Tailwind 同源，但用命名档位（不撞名），原样保留。 */
+
+:root {
+    --font-display: 'Fraunces', 'LXGW WenKai', 'Kaiti SC', 'STKaiti', 'KaiTi', serif;  /* 标题/品牌：拉丁衬线 + 中文楷体 */
+    --font-body: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC', Roboto, 'Helvetica Neue', Arial, sans-serif;  /* 正文/UI：拉丁无衬线 + 中文系统黑体 */
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;  /* 数字/代码 */
+    --line-height-tight: 1.25;  /* 标题 */
+    --line-height-body: 1.6;  /* 正文 */
+    --line-height-none: 1;  /* 大数字 */
+    --text-xs: 0.75rem;  /* 12px */
+    --text-sm: 0.875rem;  /* 14px */
+    --text-base: 1rem;  /* 16px */
+    --text-lg: 1.125rem;  /* 18px */
+    --text-xl: 1.25rem;  /* 20px */
+    --text-2xl: 1.5rem;  /* 24px */
+    --text-3xl: 1.875rem;  /* 30px */
+    --text-4xl: 2.25rem;  /* 36px */
+    --text-5xl: 3rem;  /* 48px */
+    --text-6xl: 3.75rem;  /* 60px */
+    --text-7xl: 4.5rem;  /* 72px */
+    --text-8xl: 6rem;  /* 96px */
+    --text-9xl: 8rem;  /* 128px */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --radius-xs: 0.125rem;  /* 2px */
+    --radius-sm: 0.25rem;  /* 4px */
+    --radius-md: 0.375rem;  /* 6px */
+    --radius-lg: 0.5rem;  /* 8px */
+    --radius-xl: 0.75rem;  /* 12px */
+    --radius-2xl: 1rem;  /* 16px */
+    --radius-3xl: 1.5rem;  /* 24px */
+    --radius-4xl: 2rem;  /* 32px */
+    --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --duration: 200ms;
+    --transition: all var(--duration) var(--ease);
+    --sidebar-w: 220px;
+}

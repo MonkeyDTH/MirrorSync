@@ -20,7 +20,7 @@ interface Props {
 }
 
 const fieldClass =
-  "w-full border-b border-line-2 bg-transparent px-0 py-1.5 text-[13.5px] text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-accent";
+  "w-full border-b border-border-input bg-transparent px-0 py-1.5 text-sm text-text outline-none transition-colors placeholder:text-text-tertiary focus:border-accent";
 
 export function PairDialog({ open, onOpenChange, initial, onSubmit }: Props) {
   const [name, setName] = useState("");
@@ -57,7 +57,7 @@ export function PairDialog({ open, onOpenChange, initial, onSubmit }: Props) {
 
         <div className="space-y-5">
           <div>
-            <label className="mb-1 block font-mono text-[10.5px] uppercase tracking-wide text-ink-3">
+            <label className="mb-1 block font-mono text-xs uppercase tracking-wide text-text-tertiary">
               备注名（可选）
             </label>
             <input
@@ -69,12 +69,12 @@ export function PairDialog({ open, onOpenChange, initial, onSubmit }: Props) {
           </div>
 
           <div>
-            <label className="mb-1 block font-mono text-[10.5px] uppercase tracking-wide text-ink-3">
+            <label className="mb-1 block font-mono text-xs uppercase tracking-wide text-text-tertiary">
               输入目录
             </label>
             <div className="flex items-end gap-2">
               <input
-                className={cn(fieldClass, "font-mono text-[12.5px]")}
+                className={cn(fieldClass, "font-mono text-xs")}
                 value={source}
                 onChange={(e) => setSource(e.target.value)}
                 placeholder="选择输入目录"
@@ -86,12 +86,12 @@ export function PairDialog({ open, onOpenChange, initial, onSubmit }: Props) {
           </div>
 
           <div>
-            <label className="mb-1 block font-mono text-[10.5px] uppercase tracking-wide text-ink-3">
+            <label className="mb-1 block font-mono text-xs uppercase tracking-wide text-text-tertiary">
               输出目录
             </label>
             <div className="flex items-end gap-2">
               <input
-                className={cn(fieldClass, "font-mono text-[12.5px]")}
+                className={cn(fieldClass, "font-mono text-xs")}
                 value={target}
                 onChange={(e) => setTarget(e.target.value)}
                 placeholder="选择输出目录"
@@ -103,20 +103,22 @@ export function PairDialog({ open, onOpenChange, initial, onSubmit }: Props) {
           </div>
 
           {source && target && source === target && (
-            <p className="-mt-3 text-xs text-danger">输入目录和输出目录不能相同</p>
+            <p className="-mt-3 text-xs text-danger-text">输入目录和输出目录不能相同</p>
           )}
 
           <div>
-            <label className="mb-1.5 block font-mono text-[10.5px] uppercase tracking-wide text-ink-3">
+            <label className="mb-1.5 block font-mono text-xs uppercase tracking-wide text-text-tertiary">
               同步范围
             </label>
-            <div className="inline-flex overflow-hidden rounded-md border border-line-2">
+            <div className="inline-flex overflow-hidden rounded-md border border-border-input">
               <button
                 type="button"
                 onClick={() => setRecursive(false)}
                 className={cn(
-                  "px-3 py-1.5 text-[12.5px] font-medium transition-colors",
-                  !recursive ? "bg-accent text-paper" : "bg-paper text-ink-2 hover:bg-paper-2",
+                  "px-3 py-1.5 text-xs font-medium transition-colors",
+                  !recursive
+                    ? "bg-accent text-on-accent"
+                    : "bg-surface text-text-secondary hover:bg-surface-hover",
                 )}
               >
                 仅当前层
@@ -125,14 +127,16 @@ export function PairDialog({ open, onOpenChange, initial, onSubmit }: Props) {
                 type="button"
                 onClick={() => setRecursive(true)}
                 className={cn(
-                  "border-l border-line-2 px-3 py-1.5 text-[12.5px] font-medium transition-colors",
-                  recursive ? "bg-accent text-paper" : "bg-paper text-ink-2 hover:bg-paper-2",
+                  "border-l border-border-input px-3 py-1.5 text-xs font-medium transition-colors",
+                  recursive
+                    ? "bg-accent text-on-accent"
+                    : "bg-surface text-text-secondary hover:bg-surface-hover",
                 )}
               >
                 含所有子目录
               </button>
             </div>
-            <p className="mt-1.5 text-[11.5px] text-ink-3">
+            <p className="mt-1.5 text-xs text-text-tertiary">
               {recursive ? "同步该目录及其所有层级子目录中的文件" : "仅同步该目录下第一层的文件"}
             </p>
           </div>
