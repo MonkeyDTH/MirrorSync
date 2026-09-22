@@ -1,7 +1,7 @@
 /* ============================================================
-   design-system — theme · File_Sync
+   design-system — theme · MirrorSync
 
-   品牌色族：teal    明暗模式：light    id：file-sync
+   品牌色族：teal    明暗模式：light    id：mirror-sync
    
    项目接入：先引 tokens/tokens.css，再引本文件。本文件之后加载即可覆盖默认品牌。
    这是浅色主题，无需额外属性。
