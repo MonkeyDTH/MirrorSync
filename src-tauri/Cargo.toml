@@ -1,5 +1,5 @@
 [package]
-name = "file-sync"
+name = "mirror-sync"
 # 不写 version：版本号的单一真源是根目录 package.json，tauri.conf.json 以相对路径指向它。
 # Cargo 允许省略（默认 0.0.0），这里省掉就杜绝了 crate 版本与应用版本各说各话。
 # 改版本用：npm version x.y.z --no-git-tag-version
@@ -13,7 +13,7 @@ edition = "2021"
 # The `_lib` suffix may seem redundant but it is necessary
 # to make the lib name unique and wouldn't conflict with the bin name.
 # This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
-name = "file_sync_lib"
+name = "mirror_sync_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
