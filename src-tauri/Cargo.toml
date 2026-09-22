@@ -1,6 +1,8 @@
 [package]
 name = "file-sync"
-version = "0.3.0"
+# 不写 version：版本号的单一真源是根目录 package.json，tauri.conf.json 以相对路径指向它。
+# Cargo 允许省略（默认 0.0.0），这里省掉就杜绝了 crate 版本与应用版本各说各话。
+# 改版本用：npm version x.y.z --no-git-tag-version
 description = "MirrorSync · 目录单向镜像"
 authors = ["leili"]
 edition = "2021"

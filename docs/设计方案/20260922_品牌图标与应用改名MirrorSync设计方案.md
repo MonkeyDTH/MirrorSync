@@ -5,6 +5,12 @@
 
 ---
 
+## 修改历史
+
+| 时间 | 修改内容 |
+|------|----------|
+| 2026-09-22 17:49 | 重写第 6 节：版本号原方案在五处手工同步，属设计缺陷。改为单一真源（`package.json`），`tauri.conf.json` 以相对路径指向、`Cargo.toml` 省略 version。同步更新第 7、8 节。 |
+
 ## 1. 项目族的图标范式
 
 先探查了 6 个已接入项目的图标，范式高度一致（MyFlowers 是尚未接入的例外，不作参照）：
@@ -116,9 +122,42 @@ h1 用 `font-display`（Fraunces），英文名在这套衬线字体下表现好
 
 Tauri 窗口图标走 bundle 配置、不看 favicon，但 `npm run dev` 起的页面看——留着 Vite 默认图标会误导。
 
-## 6. 版本
+## 6. 版本：收敛到单一真源
 
-0.2.0 → 0.3.0，四处同步：`package.json` / `package-lock.json` / `src-tauri/Cargo.toml` / `src-tauri/Cargo.lock` / `src-tauri/tauri.conf.json`。
+0.2.0 → 0.3.0。
+
+**初版方案是错的**：把 0.3.0 分别写进 `package.json` / `package-lock.json` / `Cargo.toml` / `Cargo.lock` / `tauri.conf.json` 五处。五份可独立编辑的版本号必然漂移——同目录下的 cc_assistant 就是现成的反例，它的 `tauri.conf.json` 是 0.8.7 而 `Cargo.toml` 还停在 0.2.0，谁也说不清哪个是真的。
+
+### 依据：这两个字段本来就是可选的
+
+Tauri 源码 `tauri-utils-2.9.3/src/config.rs:3610` 对 `version` 字段的说明：
+
+> App version. It is a semver version number **or a path to a `package.json` file** containing the `version` field.
+> **If removed the version number from `Cargo.toml` is used.**
+
+即 `tauri.conf.json` 的 `version` 是个**可选覆盖**，不是数据源。填死一个字面量等于凭空造出第三份真相。
+
+Cargo 侧同理：`[package] version` 自 Cargo 1.75 起可省略，省略时为 `0.0.0`（cargo 1.94 实测确认）。
+
+### 定稿：真源 = 根目录 `package.json`
+
+```
+package.json          0.3.0   ← 唯一手改点
+package-lock.json     0.3.0   ← npm version 自动同步
+tauri.conf.json       "version": "../package.json"   ← 相对 src-tauri/ 解析
+Cargo.toml            省略 version 字段
+Cargo.lock            0.0.0   ← 从此固定，不再随版本变动
+```
+
+改版本的唯一动作：
+
+```bash
+npm version 0.3.1 --no-git-tag-version
+```
+
+**为什么选 package.json 而不是 Cargo.toml**：两条路都能把手改点降到 1 处，差别在于 npm 有 `npm version` 这条现成命令，一次改完 `package.json` + `package-lock.json`；Cargo 没有等价的 bump 命令，选它仍然是手改文本行。代价是多一个相对路径字符串要读懂，接受。
+
+`Cargo.lock` 固定在 `0.0.0` 不是将就：它从此成为一个**不再变动**的值，也就不可能漂移。crate 版本与应用版本本来就是两件事，本项目的 crate 从不发布。
 
 ## 7. 影响文件
 
@@ -130,11 +169,11 @@ public/favicon.svg              新增 · 由 icon.svg 复制
 public/vite.svg                 删除 · 脚手架残留
 public/tauri.svg                删除 · 脚手架残留
 index.html                      title / lang / favicon
-src-tauri/tauri.conf.json       productName / title / version
-src-tauri/Cargo.toml            description / version
-src-tauri/Cargo.lock            version
-package.json                    version / 新增 devDep sharp
-package-lock.json               同上
+src-tauri/tauri.conf.json       productName / title / version 改为指向 package.json
+src-tauri/Cargo.toml            description / 删除 version 字段
+src-tauri/Cargo.lock            version → 0.0.0（固定值）
+package.json                    version 0.3.0（唯一真源）/ 新增 devDep sharp
+package-lock.json               version 0.3.0
 src/App.tsx                     h1 文案
 README.md                       标题
 docs/*.md → docs/设计方案/*.md   已有两篇设计方案迁入子目录
@@ -154,11 +193,28 @@ cd D:/Projects/Personal/design-system && node scripts/check-tokens.mjs
 # 3 图标可重复生成（改完 SVG 跑这一条即可，18 个产物全部刷新）
 cd D:/Projects/Personal/File_Sync && node scripts/gen-icons.mjs
 
-# 4 真机
+# 4 版本真源：安装包文件名里带版本号，这是版本解析链路唯一无可辩驳的证据
+#   —— tauri info 不打印应用版本，只能看真实产物
+cd D:/Projects/Personal/File_Sync && npm run tauri build
+
+# 5 真机
 cd D:/Projects/Personal/File_Sync && npm run tauri dev
 ```
 
 实测结果：1 通过（构建 1.83s）；2 File_Sync 四项全绿——`icon.svg` 里的 `#0c6d5f` 不触发色值断言，与其他项目的 `favicon.svg` 同等待遇，在扫描范围外；3 通过；dev 页面目视确认 Fraunces 下的 MirrorSync 完整无裁切，标签页标题正确。
+
+4 的产物证明了整条版本解析链路：
+
+```
+Compiling file-sync v0.0.0 (src-tauri)          ← Cargo 侧固定 0.0.0，未泄漏到产物
+Finished 2 bundles at:
+    bundle/msi/MirrorSync_0.3.0_x64_zh-CN.msi
+    bundle/nsis/MirrorSync_0.3.0_x64-setup.exe
+```
+
+exe 的 Windows 版本资源：`ProductName = MirrorSync` / `ProductVersion = 0.3.0` / `FileVersion = 0.3.0`。
+
+> 首次打包在两个安装包都写出之后报 `拒绝访问 (os error 5)`，重跑即通过（exit 0），是 Defender 扫描刚写出的安装包造成的偶发文件锁，与配置无关。
 
 真机需目视：标题栏图标、任务栏图标、开始菜单项名称、`%APPDATA%` 下配置路径未变（`com.leili.filesync`，老配置仍能读出）。
 
