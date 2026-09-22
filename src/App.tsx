@@ -126,8 +126,8 @@ function App() {
             本地 · 单向镜像
           </p>
           <h1 className="mt-1 font-display text-3xl font-normal tracking-tight text-text">
-            目录同步
-          </h1>
+            MirrorSync
+</h1>
         </div>
         <Button
           size="sm"

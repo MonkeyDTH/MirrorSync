@@ -1,0 +1,29 @@
+<!--
+  MirrorSync · 品牌标识 —— 这是唯一真源，其余 PNG / ICO / ICNS 全部由本文件渲染。
+  改图标只改这里，然后跑：node scripts/gen-icons.mjs
+
+  字形：左满色块＝输入目录，中间三角＝单向，右 .55 块＝输出目录的镜像副本。
+  与 GameCompany / WeightRecorderWeb / money_dashboard / 影游志 同族：
+  24 格画布，rx 6 瓦片，白字形靠 fill opacity 分层，不描边。
+
+  两处几何是 16px 实测定下来的，不要随手收紧：
+  1. 元素间隙 2.0 格。24 格落到 16px 时 1 格 = 0.667px，间隙小于 2 格就不足一个物理像素，
+     三个元素会并成一条。原设计间隙 1.4 格，实测糊掉。
+  2. 箭头是纯三角，没有杆。带杆版的杆高 2 格 = 1.33px，是整枚图标里最先垮掉的笔画，
+     糊掉之后箭头认不出方向 —— 而这正是本图标要传达的信息。
+  3. 副本块用 .55 而不是家族常用的 .42：.42 在 16px 下与瓦片色几乎并拢，层次差没了。
+
+  色值镜像 design system 的语义角色（图标被系统独立加载，拿不到 CSS 变量）：
+    瓦片 #0c6d5f = accent    = teal 色族第 9 阶 oklch(48% 0.084 180)
+    字形 #fefbf8 = on accent = neutral 色族第 1 阶 oklch(99% 0.005 75)
+  改品牌色族或改明度刻度时本文件需手动同步（themes/file sync.css 指向的色族 + tokens.css 的 9 阶）。
+
+  瓦片自带 rx 6 圆角：桌面平台（Windows / macOS）不会给图标套圆角遮罩，必须自己画。
+  注意：XML 注释里不能出现连续连字符，所以上面不写 CSS 变量的 var() 形式。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1024" height="1024">
+  <rect width="24" height="24" rx="6" fill="#0c6d5f"/>
+  <rect x="3" y="7.4" width="4.6" height="9.2" rx="1.5" fill="#fefbf8"/>
+  <path d="M9.8 9 L14.2 12 L9.8 15 Z" fill="#fefbf8"/>
+  <rect x="16.4" y="7.4" width="4.6" height="9.2" rx="1.5" fill="#fefbf8" fill-opacity=".55"/>
+</svg>
