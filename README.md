@@ -51,6 +51,19 @@ target/release/bundle/nsis/MirrorSync_<version>_x64-setup.exe  # NSIS 安装包
 
 > `<version>` 取自 `package.json` 的 `version` 字段——它是版本号的单一真源，`tauri.conf.json` 通过 `"version": "../package.json"` 引用它，不要在别处重复维护。
 
+### 发布 Release（自动构建）
+
+推送 `v*` tag 即触发 [.github/workflows/release.yml](.github/workflows/release.yml)：在 GitHub Actions 的 Windows 环境构建，并把上面两个安装包发布到仓库的 Releases 页面。
+
+```bash
+npm version 0.3.1 --no-git-tag-version   # 改版本号
+git commit -am "chore: 发布 v0.3.1"
+git tag v0.3.1
+git push origin main v0.3.1
+```
+
+> tag 必须与 `package.json` 的版本一致，否则流水线会在第一步报错退出。安装包未做代码签名，首次运行时 Windows SmartScreen 会提示"未知发布者"，点"更多信息 → 仍要运行"即可。
+
 > `target/` 是 Cargo 的编译缓存目录（已通过 `.cargo/config.toml` 从 `src-tauri/target` 移到根目录，并加入 `.gitignore`），体积较大（约 1GB+）属正常现象，可随时用 `cargo clean` 清理，不影响最终安装包（仅几 MB）。
 
 ## 项目结构
@@ -71,4 +84,4 @@ scripts/gen-icons.mjs  品牌图标生成脚本
 docs/               设计文档
 ```
 
-> 应用的 `identifier` 保持 `com.leili.filesync` 不变——它决定配置文件的落盘路径（`appConfigDir`），改动会导致老用户已保存的目录对配置全部丢失。同理，Cargo / npm 包名仍为 `file-sync`。
+> 应用的 `identifier` 为 `com.leili.mirrorsync`（v0.3.0 起由 `com.leili.filesync` 改来，旧版保存的目录对配置不会迁移，需重新添加）。它决定配置文件的落盘路径（`appConfigDir`），**不要再改**，否则已保存的目录对配置会再次丢失。Cargo / npm 包名为 `mirror-sync`。

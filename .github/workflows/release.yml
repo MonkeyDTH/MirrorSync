@@ -1,0 +1,55 @@
+# 推送 v* tag 时自动构建 Windows 安装包，并发布到 GitHub Release
+# 发版流程：npm version x.y.z --no-git-tag-version → 提交 → git tag vx.y.z → git push origin vx.y.z
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write # 创建 Release 并上传安装包
+
+jobs:
+  release:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      # package.json 是版本号单一真源，tag 必须与之一致，否则安装包文件名和 Release 标题会对不上
+      - name: 校验 tag 与 package.json 版本一致
+        run: |
+          pkg="v$(node -p "require('./package.json').version")"
+          if [ "$pkg" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::tag $GITHUB_REF_NAME 与 package.json 版本 $pkg 不一致"
+            exit 1
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      # Cargo 产物目录被 .cargo/config.toml 移到了仓库根目录 target/
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> ../target'
+
+      - run: npm ci
+
+      - name: 构建安装包
+        run: npm run tauri build
+
+      - name: 发布 Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            target/release/bundle/msi/*.msi \
+            target/release/bundle/nsis/*-setup.exe \
+            --title "MirrorSync $GITHUB_REF_NAME" \
+            --generate-notes
