@@ -1,11 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
-import { Plus, RefreshCw, FolderSync } from "lucide-react";
+import { Plus, RefreshCw, FolderSync, CircleArrowUp } from "lucide-react";
 import { Toaster, toast } from "sonner";
+import { getVersion } from "@tauri-apps/api/app";
+import { check, type Update } from "@tauri-apps/plugin-updater";
 import { Button } from "./components/ui/button";
 import { Checkbox } from "./components/ui/checkbox";
 import { PairCard } from "./components/PairCard";
 import { PairDialog } from "./components/PairDialog";
 import { SyncLogPanel } from "./components/SyncLogPanel";
+import { UpdateDialog } from "./components/UpdateDialog";
 import {
   addPair,
   deletePair,
@@ -23,6 +26,31 @@ function App() {
   const [syncing, setSyncing] = useState(false);
   const [progressByPair, setProgressByPair] = useState<Record<string, SyncProgress>>({});
   const [results, setResults] = useState<SyncResult[]>([]);
+  const [version, setVersion] = useState("");
+  const [update, setUpdate] = useState<Update | null>(null);
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
+
+  // 启动时检查一次更新；失败（如离线）静默，不打扰用户
+  useEffect(() => {
+    getVersion().then(setVersion);
+    check()
+      .then(setUpdate)
+      .catch((e) => console.warn("检查更新失败", e));
+  }, []);
+
+  // 手动检查：无论结果如何都给出反馈
+  const handleCheckUpdate = async () => {
+    setCheckingUpdate(true);
+    try {
+      const found = await check();
+      if (found) setUpdate(found);
+      else toast.success("已是最新版本");
+    } catch (e) {
+      toast.error(`检查更新失败: ${e}`);
+    } finally {
+      setCheckingUpdate(false);
+    }
+  };
 
   useEffect(() => {
     listPairs()
@@ -129,16 +157,29 @@ function App() {
             MirrorSync
 </h1>
         </div>
-        <Button
-          size="sm"
-          onClick={() => {
-            setEditingPair(null);
-            setDialogOpen(true);
-          }}
-        >
-          <Plus className="h-3.5 w-3.5" />
-          新建目录对
-        </Button>
+        <div className="flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="font-mono"
+            onClick={handleCheckUpdate}
+            disabled={checkingUpdate}
+            title="检查更新"
+          >
+            <CircleArrowUp className={`h-3.5 w-3.5 ${checkingUpdate ? "animate-pulse" : ""}`} />
+            {version && `v${version}`}
+          </Button>
+          <Button
+            size="sm"
+            onClick={() => {
+              setEditingPair(null);
+              setDialogOpen(true);
+            }}
+          >
+            <Plus className="h-3.5 w-3.5" />
+            新建目录对
+          </Button>
+        </div>
       </header>
 
       <div className="border-t border-border-subtle" />
@@ -213,6 +254,8 @@ function App() {
         initial={editingPair}
         onSubmit={handleSubmit}
       />
+
+      <UpdateDialog update={update} syncing={syncing} onClose={() => setUpdate(null)} />
     </main>
   );
 }

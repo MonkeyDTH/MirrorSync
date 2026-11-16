@@ -26,6 +26,7 @@
   "bundle": {
     "active": true,
     "targets": "all",
+    "createUpdaterArtifacts": true,
     "icon": [
       "icons/32x32.png",
       "icons/128x128.png",
@@ -36,6 +37,17 @@
     "windows": {
       "wix": {
         "language": "zh-CN"
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDRCMTBCRTI5MTBDQjU3M0MKUldROFY4c1FLYjRRU3h2d3ZLcGplUGhnQkJTOFlYclM1N0NLUkdGckFzb0lWQ1doUXVaeVhJdFcK",
+      "endpoints": [
+        "https://github.com/MonkeyDTH/MirrorSync/releases/latest/download/latest.json"
+      ],
+      "windows": {
+        "installMode": "passive"
       }
     }
   }

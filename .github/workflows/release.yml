@@ -43,12 +43,19 @@ jobs:
 
       - run: npm ci
 
+      # 签名私钥用于生成 updater 的 .sig，客户端用 tauri.conf.json 里的公钥校验
       - name: 构建安装包
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: npm run tauri build
 
       # 不用 --generate-notes：它只收录已合并的 PR，直接推 main 的提交不会出现
       - name: 生成 Release 说明
         run: node scripts/release-notes.mjs "$GITHUB_REF_NAME" > release-notes.md
+
+      - name: 生成 updater 清单
+        run: node scripts/updater-manifest.mjs "$GITHUB_REF_NAME" release-notes.md > latest.json
 
       - name: 发布 Release
         env:
@@ -57,5 +64,6 @@ jobs:
           gh release create "$GITHUB_REF_NAME" \
             target/release/bundle/msi/*.msi \
             target/release/bundle/nsis/*-setup.exe \
+            latest.json \
             --title "MirrorSync $GITHUB_REF_NAME" \
             --notes-file release-notes.md
