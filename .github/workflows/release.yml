@@ -17,6 +17,8 @@ jobs:
         shell: bash
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # 生成 Release 说明需要完整提交历史和所有 tag
 
       # package.json 是版本号单一真源，tag 必须与之一致，否则安装包文件名和 Release 标题会对不上
       - name: 校验 tag 与 package.json 版本一致
@@ -44,6 +46,10 @@ jobs:
       - name: 构建安装包
         run: npm run tauri build
 
+      # 不用 --generate-notes：它只收录已合并的 PR，直接推 main 的提交不会出现
+      - name: 生成 Release 说明
+        run: node scripts/release-notes.mjs "$GITHUB_REF_NAME" > release-notes.md
+
       - name: 发布 Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -52,4 +58,4 @@ jobs:
             target/release/bundle/msi/*.msi \
             target/release/bundle/nsis/*-setup.exe \
             --title "MirrorSync $GITHUB_REF_NAME" \
-            --generate-notes
+            --notes-file release-notes.md
