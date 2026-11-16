@@ -56,14 +56,24 @@ pub fn sync_pair(app: &AppHandle, pair: &SyncPair) -> SyncResult {
         return result;
     }
 
-    // 收集源文件的相对路径；未开启递归时仅同步该目录下第一层的文件
+    // 收集源文件的相对路径；未开启递归时仅同步该目录下第一层的文件。
+    // 遍历出错（如子目录无读取权限）计入 errors，避免漏同步却显示成功
     let mut walker = WalkDir::new(source);
     if !pair.recursive {
         walker = walker.max_depth(1);
     }
     let source_entries: Vec<PathBuf> = walker
         .into_iter()
-        .filter_map(|e| e.ok())
+        .filter_map(|entry| match entry {
+            Ok(e) => Some(e),
+            Err(e) => {
+                let path = e.path().map(|p| p.display().to_string()).unwrap_or_default();
+                // walkdir 的 Display 会再带一遍路径，优先取底层 IO 错误（如「拒绝访问」）
+                let reason = e.io_error().map_or_else(|| e.to_string(), |io| io.to_string());
+                result.errors.push(format!("读取失败 {path}: {reason}"));
+                None
+            }
+        })
         .filter(|e| e.file_type().is_file())
         .filter_map(|e| e.path().strip_prefix(source).ok().map(|p| p.to_path_buf()))
         .collect();
