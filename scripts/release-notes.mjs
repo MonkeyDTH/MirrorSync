@@ -21,7 +21,7 @@ const prevTag = (() => {
 })()
 
 // 面向使用者无意义的提交类型，不进入说明
-const SKIPPED_TYPES = new Set(['docs', 'ci'])
+const SKIPPED_TYPES = new Set(['docs', 'ci', 'chore'])
 
 // 分组顺序即输出顺序；未命中的类型归入「其他改进」
 const SECTIONS = [
