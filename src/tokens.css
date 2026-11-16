@@ -14,7 +14,7 @@
 /* ── Layer 1 · primitives：色板，无语义 ───────────────────────── */
 
 :root {
-    --neutral-1: oklch(99.0% 0.005 75);
+    --neutral-1: oklch(99.8% 0.002 75);
     --neutral-2: oklch(97.5% 0.007 75);
     --neutral-3: oklch(96.0% 0.008 75);
     --neutral-4: oklch(93.5% 0.010 75);
@@ -26,7 +26,7 @@
     --neutral-10: oklch(44.0% 0.017 75);
     --neutral-11: oklch(36.0% 0.018 75);
     --neutral-12: oklch(22.0% 0.019 75);
-    --red-1: oklch(99.0% 0.005 25);
+    --red-1: oklch(99.8% 0.001 25);
     --red-2: oklch(97.5% 0.012 25);
     --red-3: oklch(96.0% 0.019 25);
     --red-4: oklch(93.5% 0.031 25);
@@ -38,7 +38,7 @@
     --red-10: oklch(44.0% 0.150 25);
     --red-11: oklch(36.0% 0.138 25);
     --red-12: oklch(22.0% 0.087 25);
-    --yellow-1: oklch(99.0% 0.007 72);
+    --yellow-1: oklch(99.8% 0.002 72);
     --yellow-2: oklch(97.5% 0.018 72);
     --yellow-3: oklch(96.0% 0.029 72);
     --yellow-4: oklch(93.5% 0.048 72);
@@ -50,7 +50,7 @@
     --yellow-10: oklch(44.0% 0.091 72);
     --yellow-11: oklch(36.0% 0.075 72);
     --yellow-12: oklch(22.0% 0.048 72);
-    --green-1: oklch(99.0% 0.010 150);
+    --green-1: oklch(99.8% 0.003 150);
     --green-2: oklch(97.5% 0.016 150);
     --green-3: oklch(96.0% 0.026 150);
     --green-4: oklch(93.5% 0.040 150);
@@ -62,7 +62,7 @@
     --green-10: oklch(44.0% 0.100 150);
     --green-11: oklch(36.0% 0.092 150);
     --green-12: oklch(22.0% 0.058 150);
-    --blue-1: oklch(99.0% 0.005 250);
+    --blue-1: oklch(99.8% 0.001 250);
     --blue-2: oklch(97.5% 0.012 250);
     --blue-3: oklch(96.0% 0.019 250);
     --blue-4: oklch(93.5% 0.031 250);
@@ -74,7 +74,7 @@
     --blue-10: oklch(44.0% 0.120 250);
     --blue-11: oklch(36.0% 0.099 250);
     --blue-12: oklch(22.0% 0.063 250);
-    --olive-1: oklch(99.0% 0.015 113);
+    --olive-1: oklch(99.8% 0.007 113);
     --olive-2: oklch(97.5% 0.024 113);
     --olive-3: oklch(96.0% 0.039 113);
     --olive-4: oklch(93.5% 0.060 113);
@@ -86,7 +86,7 @@
     --olive-10: oklch(44.0% 0.095 113);
     --olive-11: oklch(36.0% 0.078 113);
     --olive-12: oklch(22.0% 0.050 113);
-    --teal-1: oklch(99.0% 0.013 180);
+    --teal-1: oklch(99.8% 0.003 180);
     --teal-2: oklch(97.5% 0.024 180);
     --teal-3: oklch(96.0% 0.039 180);
     --teal-4: oklch(93.5% 0.060 180);
@@ -98,7 +98,7 @@
     --teal-10: oklch(44.0% 0.077 180);
     --teal-11: oklch(36.0% 0.063 180);
     --teal-12: oklch(22.0% 0.040 180);
-    --sky-1: oklch(99.0% 0.011 202);
+    --sky-1: oklch(99.8% 0.002 202);
     --sky-2: oklch(97.5% 0.024 202);
     --sky-3: oklch(96.0% 0.039 202);
     --sky-4: oklch(93.5% 0.060 202);
@@ -110,7 +110,7 @@
     --sky-10: oklch(44.0% 0.072 202);
     --sky-11: oklch(36.0% 0.059 202);
     --sky-12: oklch(22.0% 0.038 202);
-    --indigo-1: oklch(99.0% 0.005 288);
+    --indigo-1: oklch(99.8% 0.001 288);
     --indigo-2: oklch(97.5% 0.012 288);
     --indigo-3: oklch(96.0% 0.019 288);
     --indigo-4: oklch(93.5% 0.032 288);
@@ -122,7 +122,7 @@
     --indigo-10: oklch(44.0% 0.150 288);
     --indigo-11: oklch(36.0% 0.138 288);
     --indigo-12: oklch(22.0% 0.087 288);
-    --magenta-1: oklch(99.0% 0.007 332);
+    --magenta-1: oklch(99.8% 0.002 332);
     --magenta-2: oklch(97.5% 0.018 332);
     --magenta-3: oklch(96.0% 0.030 332);
     --magenta-4: oklch(93.5% 0.049 332);
@@ -437,7 +437,7 @@
    引了 theme.css 就会被项目品牌覆盖。 */
 
 :root {
-    --chart-surface: #fefbf8;
+    --chart-surface: #fffefd;
     --chart-border: #c5beb6;
     --chart-text: #201911;
     --chart-text-secondary: #433c33;
@@ -556,4 +556,6 @@
     --duration: 200ms;
     --transition: all var(--duration) var(--ease);
     --sidebar-w: 220px;
+    --elevation-1: 0 1px 2px var(--shadow-color), 0 1px 3px color-mix(in oklab, var(--shadow-color) 50%, transparent);  /* 卡片 / 面板 */
+    --elevation-2: 0 8px 24px var(--shadow-color);  /* 浮层 / 弹窗 / 登录卡 */
 }
