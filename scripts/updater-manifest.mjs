@@ -33,9 +33,19 @@ const artifact = (subdir, suffix) => {
 const nsis = artifact('nsis', '-setup.exe')
 const msi = artifact('msi', '.msi')
 
+// Release 说明是给 GitHub 页面的 Markdown；应用内弹窗（含已安装的旧版本）按纯文本显示，
+// 这里转成纯文本也好看的格式：去掉 ## 标题符号、列表改圆点、删除应用内无用的对比链接
+const toPlainNotes = (markdown) =>
+  markdown
+    .split('\n')
+    .filter((line) => !line.startsWith('**完整对比**'))
+    .map((line) => line.replace(/^#+\s*/, '').replace(/^-\s+/, '• '))
+    .join('\n')
+    .trim()
+
 const manifest = {
   version: tag.replace(/^v/, ''),
-  notes: readFileSync(notesFile, 'utf8').trim(),
+  notes: toPlainNotes(readFileSync(notesFile, 'utf8')),
   pub_date: new Date().toISOString(),
   platforms: {
     'windows-x86_64-nsis': nsis,

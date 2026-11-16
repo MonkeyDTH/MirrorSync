@@ -15,6 +15,19 @@ type Progress = { downloaded: number; total: number };
 
 const formatMB = (bytes: number) => `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 
+// 更新说明由 scripts/updater-manifest.mjs 生成：「• 」开头为条目，其余非空行为分组标题
+type Section = { title: string; items: string[] };
+const parseNotes = (notes: string): Section[] =>
+  notes
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .reduce<Section[]>((sections, line) => {
+      if (!line.startsWith("• ")) return [...sections, { title: line, items: [] }];
+      const last = sections[sections.length - 1] ?? { title: "", items: [] };
+      return [...sections.slice(0, -1), { ...last, items: [...last.items, line.slice(2)] }];
+    }, []);
+
 export function UpdateDialog({ update, syncing, onClose }: Props) {
   const [progress, setProgress] = useState<Progress | null>(null);
   const downloading = progress !== null;
@@ -49,8 +62,21 @@ export function UpdateDialog({ update, syncing, onClose }: Props) {
         </DialogHeader>
 
         {update?.body && (
-          <div className="max-h-64 overflow-y-auto whitespace-pre-wrap rounded-md bg-surface-sunken p-3 text-sm text-text-secondary">
-            {update.body}
+          <div className="max-h-64 space-y-4 overflow-y-auto break-words">
+            {parseNotes(update.body).map((section, i) => (
+              <div key={i}>
+                {section.title && (
+                  <h4 className="mb-1.5 font-mono text-xs uppercase tracking-wide text-text-tertiary">
+                    {section.title}
+                  </h4>
+                )}
+                <ul className="list-disc space-y-1 pl-5 text-sm text-text-secondary marker:text-text-tertiary">
+                  {section.items.map((item, j) => (
+                    <li key={j}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
         )}
 
