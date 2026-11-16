@@ -1,10 +1,14 @@
 use serde::Serialize;
 use std::fs;
 use std::path::{Path, PathBuf};
+use std::time::{Duration, Instant};
 use tauri::{AppHandle, Emitter};
 use walkdir::WalkDir;
 
 use crate::config::SyncPair;
+
+/// 进度推送最小间隔（约 20 次/秒），足够流畅且不会刷爆前端
+const PROGRESS_INTERVAL: Duration = Duration::from_millis(50);
 
 #[derive(Debug, Clone, Serialize)]
 pub struct SyncProgress {
@@ -65,20 +69,25 @@ pub fn sync_pair(app: &AppHandle, pair: &SyncPair) -> SyncResult {
         .collect();
 
     let total = source_entries.len();
+    // 进度事件节流：首个、最后一个、以及距上次超过间隔时才推送，事件量与文件数脱钩
+    let mut last_emit: Option<Instant> = None;
 
     for (i, rel) in source_entries.iter().enumerate() {
         let src_file = source.join(rel);
         let dst_file = target.join(rel);
 
-        let _ = app.emit(
-            "sync-progress",
-            SyncProgress {
-                pair_id: pair.id.clone(),
-                current_file: rel.to_string_lossy().to_string(),
-                done: i + 1,
-                total,
-            },
-        );
+        if i + 1 == total || last_emit.map_or(true, |t| t.elapsed() >= PROGRESS_INTERVAL) {
+            let _ = app.emit(
+                "sync-progress",
+                SyncProgress {
+                    pair_id: pair.id.clone(),
+                    current_file: rel.to_string_lossy().to_string(),
+                    done: i + 1,
+                    total,
+                },
+            );
+            last_emit = Some(Instant::now());
+        }
 
         if let Some(parent) = dst_file.parent() {
             if let Err(e) = fs::create_dir_all(parent) {

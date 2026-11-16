@@ -49,14 +49,19 @@ pub fn delete_pair(app: AppHandle, id: String) -> Result<(), String> {
     save_config(&app, &config)
 }
 
+// async + spawn_blocking：同步是长时间阻塞的文件 IO，非 async 命令会在主线程执行导致窗口无响应；
+// 放进阻塞线程池，既不占主线程也不占异步运行时的工作线程
 #[tauri::command]
-pub fn sync_pairs(app: AppHandle, pair_ids: Vec<String>) -> Result<Vec<SyncResult>, String> {
-    let config = load_config(&app)?;
-    let mut results = Vec::new();
-    for id in pair_ids {
-        if let Some(pair) = config.pairs.iter().find(|p| p.id == id) {
-            results.push(sync_pair(&app, pair));
-        }
-    }
-    Ok(results)
+pub async fn sync_pairs(app: AppHandle, pair_ids: Vec<String>) -> Result<Vec<SyncResult>, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        // 开始时读一次配置快照，同步期间用户编辑/删除目录对不影响本次同步
+        let config = load_config(&app)?;
+        Ok(pair_ids
+            .iter()
+            .filter_map(|id| config.pairs.iter().find(|p| &p.id == id))
+            .map(|pair| sync_pair(&app, pair))
+            .collect())
+    })
+    .await
+    .map_err(|e| format!("同步任务异常退出: {e}"))?
 }
